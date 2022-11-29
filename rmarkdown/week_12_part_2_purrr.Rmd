@@ -1,11 +1,13 @@
 ---
-title: "Week 11 - Part II - Functional programming with Purrr"
+title: "Week 12 - Part II - Functional programming with Purrr"
 author: "Jose Luis Rodriguez Gil"
-date: "23/11/2021"
+date: "29/11/2022"
 output: 
   html_document:
     number_sections: true
     keep_md: true
+    theme: cosmo
+    highlight: tango
 ---
 
 ```{r setup, include=FALSE}
@@ -36,7 +38,7 @@ theme_set(theme_pepe_full())  #Sets the theme for all ggplot plots in this .Rmd 
 
 # Nested tibbles
 
-The **Tidyverse** `tibble` has another advantage over the traditional `data.frame` and that is that it can accept nested data.
+The **Tidyverse** `tibble` has another advantage over the traditional `data.frame` and that is that it can accept **nested data**.
 
 You can read more about **nested data formats** in this [entry](https://tidyr.tidyverse.org/articles/nest.html) in the tidiverse. Technically is almost equivalent to a named list, but it is displayed in a table format which makes it very intuitive to use.
 
@@ -50,7 +52,7 @@ print(nested_penguins)
 
 ```
 
-Th `data` column that was created now contains the subset datasets for each of the species.
+The `data` column that was created now contains the subset datasets for each of the species.
 
 You can see, that if we request that column, what we get is a list with three datasets.
 
@@ -252,6 +254,8 @@ hummmm... that didn't do what i wanted! I wanted to show this behaviour because 
 nested_plots_3b <- nested_plots_3 %>% 
   ungroup() %>% 
   select(filename, plot)
+
+nested_plots_3b
 
 ```
 

@@ -1,11 +1,14 @@
 ---
-title: "Week 11 - Part I - Working with model outputs and how to make them tidy"
+title: "Week 12 - Part I - Working with model outputs and how to make them tidy"
 author: "Jose Luis Rodriguez Gil"
-date: "23/11/2021"
+date: "29/11/2022"
 output: 
   html_document:
     number_sections: true
     keep_md: true
+    theme: cosmo
+    highlight: tango
+
 ---
 
 ```{r setup, include=FALSE}
@@ -114,7 +117,6 @@ print(model_1)
 
 ```
 
-
 There are a couple of other useful functions to show us the results of this model:
 
 ```{r}
@@ -146,6 +148,7 @@ Now.... all these approaches have a common limitation... **How the hell do i get
 In order to understand how the `model_1` object is structured we need to do some digging. The `model_1` object is basically a **list** (like the ones we saw in the first weeks), however R is quite smart, so it automatically knows that the `model_1` object is the output of a linear model, *a special kind of list*. This is good, as that is how it knew to show us the model results, but it is also a bit harder to see the contents of the list. Lets see an example.
 
 ```{r}
+
 example_list <- list(c(1,2,3,4,5),
                      c("a", "b", "c"),
                      matrix(c(1,2,3,4,5,6), ncol = 3))
@@ -320,8 +323,8 @@ augment(model_1)
 It is easier now to create our own diagnostic plots, like a Residuals Vs fitted
 
 ```{r}
-
-augment(model_1) %>% 
+model_1 %>% 
+  augment() %>% 
   clean_names() %>% 
   ggplot() +
   geom_point(aes(x = fitted, y = resid)) +
@@ -337,16 +340,15 @@ It is much easier now to display the residuals if that was something we wanted t
 
 ```{r}
 
-augment(model_1) %>% 
+model_1 %>% 
+  augment() %>% 
   clean_names() %>% 
   ggplot() +
+  geom_point(aes(x = body_mass_g, y = flipper_length_mm), colour = "grey20", stroke = 0) +
+  geom_smooth(aes(x = body_mass_g, y = flipper_length_mm), method = "lm") +
   
   geom_segment(aes(x = body_mass_g, xend = body_mass_g,
-                   y = flipper_length_mm, yend = fitted), size = 0.25, colour = "grey40") +
-  
-  geom_point(aes(x = body_mass_g, y = flipper_length_mm), colour = "grey20", stroke = 0) +
-  geom_smooth(aes(x = body_mass_g, y = flipper_length_mm), method = "lm") 
-  
+                   y = flipper_length_mm, yend = fitted), size = 0.25, colour = "grey40")
 
 ```
 
